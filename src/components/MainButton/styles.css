@@ -1,0 +1,15 @@
+.main-button {
+  background-color: #ff6565;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  font-family: 'Alegreya Sans';
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 18px;
+}
+
+.main-button:last-child {
+  margin-right: 0px;
+}
