@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import { MainButton } from '../../components/MainButton';
 import './styles.css';
 import {
   shipRoutes,
@@ -9,6 +8,7 @@ import {
 } from '../../constants/schedule';
 import { ShipScheduleTime } from '../../containers/ShipScheduleTime';
 import '../../containers/ShipScheduleTime/styles.css';
+import { TicketInfo } from '../../containers/TicketInfo';
 
 export const MainPage: React.FC = () => {
   const [selectedRoute, setSelectedRoute] = useState<ShipRoutesType | null>(
@@ -42,10 +42,11 @@ export const MainPage: React.FC = () => {
         secondTime={selectedBackTime}
         setSecondTime={setSelectedBackTime}
       />
-
-      <MainButton onClick={() => console.log('Рассчитать стоимость')}>
-        Рассчитать стоимость
-      </MainButton>
+      <TicketInfo
+        route={selectedRoute}
+        time={selectedTime?.value}
+        secondTime={selectedBackTime?.value}
+      />
     </div>
   );
 };

@@ -95,7 +95,9 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
               isDisabled={!routeType && routeType !== 0}
               value={time}
               onChange={(selected) => setTime(selected)}
-              options={(routeType && schedule[routeType]) || []}
+              options={
+                ((routeType || routeType === 0) && schedule[routeType]) || []
+              }
             />
           ) : (
             <div className="select-section__content--flex">

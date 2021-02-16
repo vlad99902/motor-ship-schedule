@@ -53,3 +53,5 @@ export const timeSchedule: timeScheduleType = {
 };
 
 export const timerToOneDirectionTripInMinutes: number = 50;
+export const ticketOneDirectionPrice = 700;
+export const ticketTwoDirectionsPrice = 1200;
