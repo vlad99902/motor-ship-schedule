@@ -5,41 +5,23 @@ import './styles.css';
 import {
   shipRoutes,
   SelectOptionType,
-  scheduleFromAToB,
-  scheduleFromBToA,
+  ShipRoutesType,
 } from '../../constants/schedule';
+import { ShipSheduleTime } from '../../containers/ShipSheduleTime';
 
 export const MainPage: React.FC = () => {
-  const [selectedRoute, setSelectedRoute] = useState<SelectOptionType | null>(
+  const [selectedRoute, setSelectedRoute] = useState<ShipRoutesType | null>(
+    null,
+  );
+
+  const [selectedTime, setSelectedTime] = useState<SelectOptionType | null>(
     null,
   );
   const [
-    selectedTimeOneDirectionTrip,
-    setSelectedTimeOneDirectionTrip,
+    selectedBackTime,
+    setSelectedBackTime,
   ] = useState<SelectOptionType | null>(null);
 
-  const showSelectsBySelectedRoutes = (
-    routeId: number | undefined,
-  ): React.ReactFragment => {
-    if (routeId === 0)
-      return (
-        <Select
-          value={selectedTimeOneDirectionTrip}
-          onChange={(selected) => setSelectedTimeOneDirectionTrip(selected)}
-          options={scheduleFromAToB}
-        />
-      );
-    else if (routeId === 1)
-      return (
-        <Select
-          value={selectedTimeOneDirectionTrip}
-          onChange={(selected) => setSelectedTimeOneDirectionTrip(selected)}
-          options={scheduleFromBToA}
-        />
-      );
-
-    return <></>;
-  };
   return (
     <div className="container">
       <Select
@@ -47,9 +29,17 @@ export const MainPage: React.FC = () => {
         onChange={(selected) => setSelectedRoute(selected)}
         options={shipRoutes}
       />
-      {showSelectsBySelectedRoutes(selectedRoute?.id)}
+      <ShipSheduleTime
+        routeType={selectedRoute?.type}
+        time={selectedTime}
+        setTime={setSelectedTime}
+        secondTime={selectedBackTime}
+        setSecondTime={setSelectedBackTime}
+      />
+
       {selectedRoute?.value}
-      {selectedTimeOneDirectionTrip?.value}
+      {selectedTime?.value}
+      {selectedBackTime?.value}
       <MainButton onClick={() => console.log('ЕНЗУЫ')}>Type</MainButton>
     </div>
   );
