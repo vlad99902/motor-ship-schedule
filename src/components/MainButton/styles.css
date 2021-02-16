@@ -16,4 +16,5 @@
 
 .main-button--disabled {
   background-color: #6e6e6e;
+  cursor: not-allowed !important;
 }

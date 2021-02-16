@@ -1,7 +1,29 @@
+export const getTimeZeroDigit = (
+  time: number | string,
+  type: 'time',
+): string => {
+  if (typeof time === 'string') {
+    time = +time;
+  }
+  if (time % 10 === time && type === 'time') {
+    return '0' + String(time);
+  } else return String(time);
+};
+
 export const timeStampToHumanReadble = (date: Date): string => {
   const arrayDates = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
-  const arrayTime = [date.getHours(), date.getMinutes(), date.getSeconds()];
+  const arrayTime = [
+    getTimeZeroDigit(date.getHours(), 'time'),
+    getTimeZeroDigit(date.getMinutes(), 'time'),
+    getTimeZeroDigit(date.getSeconds(), 'time'),
+  ];
   return arrayDates.join('-') + ' ' + arrayTime.join(':');
+};
+
+export const setTimeToLocalTimeZone = (
+  timeStamp: string | undefined,
+): string | undefined => {
+  if (timeStamp) return timeStampToHumanReadble(new Date(timeStamp));
 };
 
 export const tripDuratin = (beginTime: string, endTime: string): string => {

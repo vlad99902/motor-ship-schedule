@@ -3,9 +3,11 @@ import Select from 'react-select';
 import {
   SelectOptionType,
   timerToOneDirectionTripInMinutes,
+  timeScheduleType,
 } from '../../constants/schedule';
 import { useFetchScheduleTime } from '../../hooks/useFetchScheduleTime';
 import './styles.css';
+import { setTimeToLocalTimeZone } from '../../utils/dateAndTime';
 
 type ShipScheduleTimeType = {
   routeType: number | undefined;
@@ -27,6 +29,13 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   const [timeSchedule, getNewSchedule] = useFetchScheduleTime();
   const { schedule, loading, error } = timeSchedule;
 
+  const [
+    localTimeZoneSchedule,
+    setLocalTimeZoneSchedule,
+  ] = useState<timeScheduleType>(schedule);
+
+  console.log(localTimeZoneSchedule, schedule);
+
   const [filteredSecondSchedule, setFilteredSecondSchedule] = useState(
     schedule[1],
   );
@@ -36,10 +45,27 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   }, []);
 
   useEffect(() => {
+    setLocalTimeZoneSchedule(setScheduleToLocalTimeZone(schedule));
+  }, [schedule]);
+
+  useEffect(() => {
     setTime(null);
     setSecondTime(null);
+
     setFilteredSecondSchedule(schedule[1]);
   }, [routeType]);
+
+  const setScheduleToLocalTimeZone = (schedule: timeScheduleType) => {
+    return schedule.map((oneDirSchedule) =>
+      oneDirSchedule.map((time) => {
+        return {
+          time: time.id,
+          value: setTimeToLocalTimeZone(time.value),
+          label: setTimeToLocalTimeZone(time.label),
+        };
+      }),
+    );
+  };
 
   const filterSecondSchedule = (
     secondSchedule: SelectOptionType[],
@@ -81,46 +107,42 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
       : setSecondTime(secondSelectedExists);
   };
 
-  //if loading
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
-    <>
-      {!loading && (
-        <section className="select-section">
-          <h1 className="select-section__header">
-            Выберите время {routeName}:
-          </h1>
-          <div className="select-section__content"></div>
+    <section className="select-section">
+      <h1 className="select-section__header">Выберите время {routeName}:</h1>
+      <div className="select-section__content"></div>
 
-          {routeType !== 2 ? (
+      {routeType !== 2 ? (
+        <Select
+          isDisabled={!routeType && routeType !== 0}
+          value={time}
+          onChange={(selected) => setTime(selected)}
+          options={
+            ((routeType || routeType === 0) && schedule[routeType]) || []
+          }
+        />
+      ) : (
+        <div className="select-section__content--flex">
+          <div className="select-section__selects">
             <Select
-              isDisabled={!routeType && routeType !== 0}
               value={time}
-              onChange={(selected) => setTime(selected)}
-              options={
-                ((routeType || routeType === 0) && schedule[routeType]) || []
-              }
+              onChange={onChageTimeRouteTypeTwo}
+              options={schedule[0]}
             />
-          ) : (
-            <div className="select-section__content--flex">
-              <div className="select-section__selects">
-                <Select
-                  value={time}
-                  onChange={onChageTimeRouteTypeTwo}
-                  options={schedule[0]}
-                />
-              </div>
-              <div className="select-section__selects">
-                <Select
-                  value={secondTime}
-                  onChange={(selected) => setSecondTime(selected)}
-                  options={filteredSecondSchedule || schedule[1]}
-                />
-              </div>
-            </div>
-          )}
-        </section>
+          </div>
+          <div className="select-section__selects">
+            <Select
+              value={secondTime}
+              onChange={(selected) => setSecondTime(selected)}
+              options={filteredSecondSchedule || schedule[1]}
+            />
+          </div>
+        </div>
       )}
-    </>
+    </section>
   );
 };

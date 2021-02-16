@@ -8,7 +8,7 @@ export const useFetchScheduleTime = (): [
   { schedule: timeScheduleType; loading: boolean; error: string | null },
   () => Promise<any>,
 ] => {
-  const [schedule, setSchedule] = useState<timeScheduleType>({});
+  const [schedule, setSchedule] = useState<timeScheduleType>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

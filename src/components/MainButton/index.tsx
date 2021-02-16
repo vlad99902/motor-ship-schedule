@@ -3,20 +3,18 @@ import './styles.css';
 
 interface IMainButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  disabled: boolean;
 }
 
-export const MainButton: React.FC<IMainButton> = ({
-  children,
-  disabled,
-  ...rest
-}) => {
-  const setDisabledStyle = (disabled: boolean) => {
+export const MainButton: React.FC<IMainButton> = ({ children, ...rest }) => {
+  const setDisabledStyle = (disabled: boolean | undefined) => {
     if (disabled) return 'main-button--disabled';
     return '';
   };
   return (
-    <button className={'main-button ' + setDisabledStyle(disabled)} {...rest}>
+    <button
+      className={'main-button ' + setDisabledStyle(rest.disabled)}
+      {...rest}
+    >
       {children}
     </button>
   );
