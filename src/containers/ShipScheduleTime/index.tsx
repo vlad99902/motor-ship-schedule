@@ -81,6 +81,8 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
       : setSecondTime(secondSelectedExists);
   };
 
+  //if loading
+
   return (
     <>
       {!loading && (

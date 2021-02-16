@@ -7,7 +7,8 @@ import {
   ticketTwoDirectionsPrice,
   timerToOneDirectionTripInMinutes,
 } from '../../constants/schedule';
-import { timeStampToHumanReadble } from '../../utils/dateAndTime';
+import { timeStampToHumanReadble, tripDuratin } from '../../utils/dateAndTime';
+import './styles.css';
 
 type TicketInfoType = {
   time: string | undefined;
@@ -24,7 +25,6 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
   const [ticketInfo, setTicketInfo] = useState<{
     route: ShipRoutesType | null;
     quantity: number | null;
-
     price: number | undefined;
     endTripTime: string;
     endSecondTripTime?: string;
@@ -33,12 +33,11 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
   }>({
     route: null,
     quantity: null,
-
     price: undefined,
     endTripTime: '',
   });
-  const [inputValid, setInputValid] = useState(true);
 
+  const [inputValid, setInputValid] = useState(true);
   const inputChangeHandler = (event: any) => {
     setTicketsCount(event.target.value);
     isInputValid(event.target.value);
@@ -102,7 +101,6 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
       (route?.type === 2 && !secondTime)
     )
       return true;
-
     return false;
   };
 
@@ -112,43 +110,75 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
 
   return (
     <>
-      <InputField
-        id="num"
-        type="number"
-        isValid={inputValid}
-        onChange={inputChangeHandler}
-      />
-      <MainButton
-        disabled={submitDisabled(time, secondTime, route, ticketsCount)}
-        onClick={() => {
-          submitClickHandler(
-            ticketOneDirectionPrice,
-            ticketTwoDirectionsPrice,
-            timerToOneDirectionTripInMinutes,
-          );
-        }}
-      >
-        Посчитать
-      </MainButton>
-
-      <div>
-        <div>Поездка {ticketInfo?.route?.value}</div>
+      <section className="select-section">
+        <h1 className="select-section__header">
+          Выберите количество билетов:{' '}
+        </h1>
+        <div className="select-section__content">
+          <InputField
+            id="num"
+            type="number"
+            isValid={inputValid}
+            onChange={inputChangeHandler}
+          />
+          <MainButton
+            disabled={submitDisabled(time, secondTime, route, ticketsCount)}
+            onClick={() => {
+              submitClickHandler(
+                ticketOneDirectionPrice,
+                ticketTwoDirectionsPrice,
+                timerToOneDirectionTripInMinutes,
+              );
+            }}
+          >
+            Посчитать
+          </MainButton>
+        </div>
+      </section>
+      <section className="trip-info">
+        <h1 className="trip-info__header">Информация о выбранных билетах</h1>
         <hr />
-        <div>Количество билетов: {ticketInfo?.quantity}</div>
-        <div>Стоимость:{ticketInfo?.price}</div>
-        <hr />
-        <div>Время начала поездки: {ticketInfo?.time}</div>
-        <div>Время окончания поездки: {ticketInfo?.endTripTime}</div>
-        {ticketInfo?.secondTime && (
-          <>
-            <hr />
-            <div>Время начала обратной поездки: {ticketInfo.secondTime}</div>
-            <div>
-              Время окончания обратной поездки: {ticketInfo?.endSecondTripTime}
-            </div>
-          </>
-        )}
-      </div>
+        <div className="trip-info__content">
+          Поездка {ticketInfo?.route?.value}
+          <hr />
+          <h3>Количество билетов: {ticketInfo?.quantity}</h3>
+          <h3>Стоимость: {ticketInfo?.price}</h3>
+          <hr />
+          <h3>Время начала поездки: {ticketInfo?.time}</h3>
+          <h3>Время окончания поездки: {ticketInfo?.endTripTime}</h3>
+          <h3>
+            Поездка займет:
+            {ticketInfo.endTripTime &&
+              ticketInfo.time &&
+              tripDuratin(ticketInfo.time, ticketInfo.endTripTime)}
+          </h3>
+          {ticketInfo?.secondTime && (
+            <>
+              <hr />
+              <h3>Время начала обратной поездки: {ticketInfo.secondTime}</h3>
+              <h3>
+                Время окончания обратной поездки:{' '}
+                {ticketInfo?.endSecondTripTime}
+              </h3>
+              <h3>
+                Обратная поездка займет:
+                {ticketInfo.endSecondTripTime &&
+                  tripDuratin(
+                    ticketInfo.secondTime,
+                    ticketInfo.endSecondTripTime,
+                  )}
+              </h3>
+              <hr />
+              <h3>
+                Все путешествие займет:
+                {ticketInfo.endSecondTripTime &&
+                  ticketInfo.time &&
+                  tripDuratin(ticketInfo.time, ticketInfo.endSecondTripTime)}
+              </h3>
+            </>
+          )}
+        </div>
+      </section>
     </>
   );
 };

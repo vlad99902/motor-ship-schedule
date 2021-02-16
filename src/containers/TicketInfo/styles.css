@@ -1,0 +1,18 @@
+.trip-info {
+}
+
+.trip-info__header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.select-section__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-section__input {
+  width: 400px;
+}
