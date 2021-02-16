@@ -1,31 +1,31 @@
 import { useState } from 'react';
 import {
-  timeShedule as constShedule,
-  timeSheduleType,
+  timeSchedule as constSchedule,
+  timeScheduleType,
 } from '../constants/schedule';
 
-export const useFetchSheduleTime = (): [
-  { shedule: timeSheduleType; loading: boolean; error: string | null },
+export const useFetchScheduleTime = (): [
+  { schedule: timeScheduleType; loading: boolean; error: string | null },
   () => Promise<any>,
 ] => {
-  const [shedule, setShedule] = useState<timeSheduleType>({});
+  const [schedule, setSchedule] = useState<timeScheduleType>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getNewShedule = async () => {
+  const getNewSchedule = async () => {
     setLoading(true);
     try {
-      // const response = await fetchTimeShedule('meat-and-filler', 1);
-      // const timeShedule = await response.json();
-      const timeShedule = constShedule;
+      // const response = await fetchTimeSchedule('meat-and-filler', 1);
+      // const timeSchedule = await response.json();
+      const timeSchedule = constSchedule;
 
       // if (!response.ok) {
       //   throw new Error(text.message || 'Something wrong in fetch');
       // }
 
-      setShedule(timeShedule);
+      setSchedule(timeSchedule);
       setError(null);
-      return timeShedule;
+      return timeSchedule;
     } catch (error) {
       setError(error.message);
       throw error;
@@ -34,5 +34,5 @@ export const useFetchSheduleTime = (): [
     }
   };
 
-  return [{ shedule, loading, error }, getNewShedule];
+  return [{ schedule, loading, error }, getNewSchedule];
 };

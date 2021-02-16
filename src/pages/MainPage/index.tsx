@@ -7,13 +7,13 @@ import {
   SelectOptionType,
   ShipRoutesType,
 } from '../../constants/schedule';
-import { ShipSheduleTime } from '../../containers/ShipSheduleTime';
+import { ShipScheduleTime } from '../../containers/ShipScheduleTime';
+import '../../containers/ShipScheduleTime/styles.css';
 
 export const MainPage: React.FC = () => {
   const [selectedRoute, setSelectedRoute] = useState<ShipRoutesType | null>(
     null,
   );
-
   const [selectedTime, setSelectedTime] = useState<SelectOptionType | null>(
     null,
   );
@@ -24,23 +24,28 @@ export const MainPage: React.FC = () => {
 
   return (
     <div className="container">
-      <Select
-        value={selectedRoute}
-        onChange={(selected) => setSelectedRoute(selected)}
-        options={shipRoutes}
-      />
-      <ShipSheduleTime
+      <section className="select-section">
+        <h1 className="select-section__header">
+          Выберите направление маршрута:
+        </h1>
+        <Select
+          value={selectedRoute}
+          onChange={(selected) => setSelectedRoute(selected)}
+          options={shipRoutes}
+        />
+      </section>
+      <ShipScheduleTime
         routeType={selectedRoute?.type}
+        routeName={selectedRoute?.label}
         time={selectedTime}
         setTime={setSelectedTime}
         secondTime={selectedBackTime}
         setSecondTime={setSelectedBackTime}
       />
 
-      {selectedRoute?.value}
-      {selectedTime?.value}
-      {selectedBackTime?.value}
-      <MainButton onClick={() => console.log('ЕНЗУЫ')}>Type</MainButton>
+      <MainButton onClick={() => console.log('Рассчитать стоимость')}>
+        Рассчитать стоимость
+      </MainButton>
     </div>
   );
 };

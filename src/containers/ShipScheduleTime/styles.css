@@ -1,0 +1,26 @@
+.select-section {
+  margin-bottom: 22px;
+}
+
+.select-section:last-child {
+  margin-bottom: 0;
+}
+
+.select-section__header {
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.select-section__content {
+}
+
+.select-section__content--flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select-section__selects {
+  width: 250px;
+}
