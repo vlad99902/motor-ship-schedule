@@ -38,8 +38,8 @@ export const tripDuratin = (beginTime: string, endTime: string): string => {
   const minutes = durationMinutes % 60;
 
   let duration: string = '';
-  if (days) duration += 'дней: ' + days + ', ';
-  if (hours) duration += 'часов: ' + hours + ', ';
-  if (minutes) duration += 'минут: ' + minutes;
+  if (days) duration += 'дней: ' + days;
+  if (hours) duration += ' часов: ' + hours;
+  if (minutes) duration += ' минут: ' + minutes;
   return '' + duration;
 };

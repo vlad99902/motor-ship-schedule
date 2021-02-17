@@ -24,3 +24,16 @@
 .select-section__selects {
   width: 250px;
 }
+
+.error {
+  color: crimson;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.loading {
+  color: greenyellow;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 12px;
+}

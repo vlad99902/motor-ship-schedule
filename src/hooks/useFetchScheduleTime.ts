@@ -1,8 +1,6 @@
+import { fetchSchedule } from './../api/fetchSchedule';
 import { useState } from 'react';
-import {
-  timeSchedule as constSchedule,
-  timeScheduleType,
-} from '../constants/schedule';
+import { timeScheduleType } from '../constants/schedule';
 
 export const useFetchScheduleTime = (): [
   { schedule: timeScheduleType; loading: boolean; error: string | null },
@@ -15,15 +13,14 @@ export const useFetchScheduleTime = (): [
   const getNewSchedule = async () => {
     setLoading(true);
     try {
-      // const response = await fetchTimeSchedule('meat-and-filler', 1);
-      // const timeSchedule = await response.json();
-      const timeSchedule = constSchedule;
+      const response = await fetchSchedule();
+      const timeSchedule = await response.json();
 
-      // if (!response.ok) {
-      //   throw new Error(text.message || 'Something wrong in fetch');
-      // }
+      if (!response.ok) {
+        throw new Error(timeSchedule.message || 'Something wrong in fetch');
+      }
 
-      setSchedule(timeSchedule);
+      setSchedule(timeSchedule.schedule);
       setError(null);
       return timeSchedule;
     } catch (error) {

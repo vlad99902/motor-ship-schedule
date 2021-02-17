@@ -9,7 +9,7 @@ app.use(cors());
 
 const scheduleRoutes = require('./routes/schedule.routes');
 
-app.use('/', scheduleRoutes);
+app.use('/api/', scheduleRoutes);
 
 app.get('/', (req, res) => {
   res.send('Route not found');

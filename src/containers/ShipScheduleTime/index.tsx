@@ -105,7 +105,10 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   };
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <h1 className="loading">Loading...</h1>;
+  }
+  if (error) {
+    return <h1 className="error">{error}...</h1>;
   }
 
   return (
