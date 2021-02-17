@@ -1,10 +1,22 @@
-.trip-info {
+.trip-info span {
+  font-weight: 600;
 }
 
 .trip-info__header {
   text-align: center;
   font-weight: 600;
   font-size: 24px;
+}
+
+.trip-info__two-trips-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trip-info__back-direction {
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .select-section__content {

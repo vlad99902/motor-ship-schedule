@@ -1,0 +1,20 @@
+.trip-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.trip-time__times {
+  width: 280px;
+}
+
+.trip-time__start-end {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trip-time span {
+  font-weight: 600;
+}

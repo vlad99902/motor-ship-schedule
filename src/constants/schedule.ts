@@ -12,6 +12,16 @@ export type ShipRoutesType = {
 
 export type timeScheduleType = SelectOptionType[][];
 
+export type TicketInfoFullType = {
+  route: ShipRoutesType | null;
+  quantity: number | null;
+  price: number | undefined;
+  endTripTime: string;
+  endSecondTripTime?: string;
+  time?: string;
+  secondTime?: string;
+};
+
 export const shipRoutes: ShipRoutesType[] = [
   { type: 0, value: 'из A в B', label: 'из A в B' },
   { type: 1, value: 'из B в А', label: 'из B в А' },

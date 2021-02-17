@@ -34,8 +34,6 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
     setLocalTimeZoneSchedule,
   ] = useState<timeScheduleType>(schedule);
 
-  console.log(localTimeZoneSchedule, schedule);
-
   const [filteredSecondSchedule, setFilteredSecondSchedule] = useState(
     schedule[1],
   );
@@ -51,8 +49,7 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   useEffect(() => {
     setTime(null);
     setSecondTime(null);
-
-    setFilteredSecondSchedule(schedule[1]);
+    setFilteredSecondSchedule(localTimeZoneSchedule[1]);
   }, [routeType]);
 
   const setScheduleToLocalTimeZone = (schedule: timeScheduleType) => {
@@ -92,7 +89,7 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
     setTime(selected);
 
     const filteredSchedule = filterSecondSchedule(
-      schedule[1],
+      localTimeZoneSchedule[1],
       selected?.value,
       timerToOneDirectionTripInMinutes,
     );
@@ -122,7 +119,9 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
           value={time}
           onChange={(selected) => setTime(selected)}
           options={
-            ((routeType || routeType === 0) && schedule[routeType]) || []
+            ((routeType || routeType === 0) &&
+              localTimeZoneSchedule[routeType]) ||
+            []
           }
         />
       ) : (
@@ -131,14 +130,14 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
             <Select
               value={time}
               onChange={onChageTimeRouteTypeTwo}
-              options={schedule[0]}
+              options={localTimeZoneSchedule[0]}
             />
           </div>
           <div className="select-section__selects">
             <Select
               value={secondTime}
               onChange={(selected) => setSecondTime(selected)}
-              options={filteredSecondSchedule || schedule[1]}
+              options={filteredSecondSchedule || localTimeZoneSchedule[1]}
             />
           </div>
         </div>

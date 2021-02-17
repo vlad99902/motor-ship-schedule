@@ -3,12 +3,14 @@ import { InputField } from '../../components/InputField';
 import { MainButton } from '../../components/MainButton';
 import {
   ShipRoutesType,
+  TicketInfoFullType,
   ticketOneDirectionPrice,
   ticketTwoDirectionsPrice,
   timerToOneDirectionTripInMinutes,
 } from '../../constants/schedule';
 import { timeStampToHumanReadble, tripDuratin } from '../../utils/dateAndTime';
 import './styles.css';
+import { TripTime } from '../TripTime';
 
 type TicketInfoType = {
   time: string | undefined;
@@ -22,15 +24,7 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
   route,
 }) => {
   const [ticketsCount, setTicketsCount] = useState(0);
-  const [ticketInfo, setTicketInfo] = useState<{
-    route: ShipRoutesType | null;
-    quantity: number | null;
-    price: number | undefined;
-    endTripTime: string;
-    endSecondTripTime?: string;
-    time?: string;
-    secondTime?: string;
-  }>({
+  const [ticketInfo, setTicketInfo] = useState<TicketInfoFullType>({
     route: null,
     quantity: null,
     price: undefined,
@@ -139,42 +133,40 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
         <h1 className="trip-info__header">Информация о выбранных билетах</h1>
         <hr />
         <div className="trip-info__content">
-          Поездка {ticketInfo?.route?.value}
+          Поездка <span>{ticketInfo?.route?.value}</span>
           <hr />
-          <h3>Количество билетов: {ticketInfo?.quantity}</h3>
-          <h3>Стоимость: {ticketInfo?.price}</h3>
-          <hr />
-          <h3>Время начала поездки: {ticketInfo?.time}</h3>
-          <h3>Время окончания поездки: {ticketInfo?.endTripTime}</h3>
           <h3>
-            Поездка займет:
-            {ticketInfo.endTripTime &&
-              ticketInfo.time &&
-              tripDuratin(ticketInfo.time, ticketInfo.endTripTime)}
+            Количество билетов: <span>{ticketInfo?.quantity}</span>
           </h3>
-          {ticketInfo?.secondTime && (
+          <h3>
+            Стоимость: <span>{ticketInfo?.price}</span>
+          </h3>
+          {ticketInfo.time && (
             <>
               <hr />
-              <h3>Время начала обратной поездки: {ticketInfo.secondTime}</h3>
-              <h3>
-                Время окончания обратной поездки:{' '}
-                {ticketInfo?.endSecondTripTime}
-              </h3>
-              <h3>
-                Обратная поездка займет:
-                {ticketInfo.endSecondTripTime &&
-                  tripDuratin(
-                    ticketInfo.secondTime,
-                    ticketInfo.endSecondTripTime,
-                  )}
-              </h3>
+              <TripTime
+                time={ticketInfo?.time}
+                endTime={ticketInfo?.endTripTime}
+              />
+            </>
+          )}
+          {ticketInfo?.secondTime && ticketInfo?.endSecondTripTime && (
+            <>
               <hr />
-              <h3>
-                Все путешествие займет:
-                {ticketInfo.endSecondTripTime &&
-                  ticketInfo.time &&
-                  tripDuratin(ticketInfo.time, ticketInfo.endSecondTripTime)}
-              </h3>
+              <h2 className="trip-info__back-direction">Обратная поездка</h2>
+              <TripTime
+                time={ticketInfo?.secondTime}
+                endTime={ticketInfo?.endSecondTripTime}
+              />
+              <hr />
+              <div className="trip-info__two-trips-time">
+                <h3>Все путешествие займет:</h3>
+                <span>
+                  {ticketInfo.endSecondTripTime &&
+                    ticketInfo.time &&
+                    tripDuratin(ticketInfo.time, ticketInfo.endSecondTripTime)}
+                </span>
+              </div>
             </>
           )}
         </div>
