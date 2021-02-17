@@ -1,0 +1,21 @@
+{
+  "name": "motor-ship-schedule-server",
+  "version": "1.0.0",
+  "description": "Server to parse shedule",
+  
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Legkov Vladislav <legkovv@mail.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
