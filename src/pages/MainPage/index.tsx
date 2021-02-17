@@ -5,6 +5,9 @@ import {
   shipRoutes,
   SelectOptionType,
   ShipRoutesType,
+  timerToOneDirectionTripInMinutes,
+  ticketOneDirectionPrice,
+  ticketTwoDirectionsPrice,
 } from '../../constants/schedule';
 import { ShipScheduleTime } from '../../containers/ShipScheduleTime';
 import '../../containers/ShipScheduleTime/styles.css';
@@ -41,8 +44,12 @@ export const MainPage: React.FC = () => {
         setTime={setSelectedTime}
         secondTime={selectedBackTime}
         setSecondTime={setSelectedBackTime}
+        timerToOneDirectionTripInMinutes={timerToOneDirectionTripInMinutes}
       />
       <TicketInfo
+        ticketOneDirectionPrice={ticketOneDirectionPrice}
+        ticketTwoDirectionsPrice={ticketTwoDirectionsPrice}
+        timerToOneDirectionTripInMinutes={timerToOneDirectionTripInMinutes}
         route={selectedRoute}
         time={selectedTime?.value}
         secondTime={selectedBackTime?.value}

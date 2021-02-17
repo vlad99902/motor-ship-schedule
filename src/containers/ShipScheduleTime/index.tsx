@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
-import {
-  SelectOptionType,
-  timerToOneDirectionTripInMinutes,
-  timeScheduleType,
-} from '../../constants/schedule';
+import { SelectOptionType, timeScheduleType } from '../../constants/schedule';
 import { useFetchScheduleTime } from '../../hooks/useFetchScheduleTime';
 import './styles.css';
 import { setTimeToLocalTimeZone } from '../../utils/dateAndTime';
@@ -16,6 +12,7 @@ type ShipScheduleTimeType = {
   setTime: (arg0: SelectOptionType | null) => void;
   secondTime: SelectOptionType | null;
   setSecondTime: (arg0: SelectOptionType | null) => void;
+  timerToOneDirectionTripInMinutes: number;
 };
 
 export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
@@ -25,6 +22,7 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   setTime,
   secondTime,
   setSecondTime,
+  timerToOneDirectionTripInMinutes,
 }) => {
   const [timeSchedule, getNewSchedule] = useFetchScheduleTime();
   const { schedule, loading, error } = timeSchedule;

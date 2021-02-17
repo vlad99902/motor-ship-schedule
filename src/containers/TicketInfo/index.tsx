@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { InputField } from '../../components/InputField';
 import { MainButton } from '../../components/MainButton';
-import {
-  ShipRoutesType,
-  TicketInfoFullType,
-  ticketOneDirectionPrice,
-  ticketTwoDirectionsPrice,
-  timerToOneDirectionTripInMinutes,
-} from '../../constants/schedule';
+import { ShipRoutesType, TicketInfoFullType } from '../../constants/schedule';
 import { timeStampToHumanReadble, tripDuratin } from '../../utils/dateAndTime';
 import './styles.css';
 import { TripTime } from '../TripTime';
@@ -16,12 +10,18 @@ type TicketInfoType = {
   time: string | undefined;
   secondTime: string | undefined;
   route: ShipRoutesType | null;
+  ticketOneDirectionPrice: number;
+  ticketTwoDirectionsPrice: number;
+  timerToOneDirectionTripInMinutes: number;
 };
 
 export const TicketInfo: React.FC<TicketInfoType> = ({
   time,
   secondTime,
   route,
+  ticketOneDirectionPrice,
+  ticketTwoDirectionsPrice,
+  timerToOneDirectionTripInMinutes,
 }) => {
   const [ticketsCount, setTicketsCount] = useState(0);
   const [ticketInfo, setTicketInfo] = useState<TicketInfoFullType>({
