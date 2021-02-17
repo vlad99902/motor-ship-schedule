@@ -7,6 +7,10 @@ const PORT = process.env.port || 3001;
 app.use(express.json());
 app.use(cors());
 
+const scheduleRoutes = require('./routes/schedule.routes');
+
+app.use('/', scheduleRoutes);
+
 app.get('/', (req, res) => {
   res.send('Route not found');
 });
