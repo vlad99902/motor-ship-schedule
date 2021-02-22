@@ -1,11 +1,16 @@
-import React, { InputHTMLAttributes } from 'react';
-import './styles.css';
+import React, { InputHTMLAttributes } from "react";
+import "./styles.css";
 
 interface IInputField extends InputHTMLAttributes<HTMLInputElement> {
   isValid?: boolean;
-  messageType?: 'sever' | 'warning';
+  messageType?: "sever" | "warning";
   messageText?: string;
 }
+
+/**
+ * Input field global component
+ * @param param0
+ */
 
 export const InputField: React.FC<IInputField> = ({
   isValid = true,

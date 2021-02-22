@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Select from 'react-select';
-import './styles.css';
+import React, { useState } from "react";
+import Select from "react-select";
+import "./styles.css";
 import {
   shipRoutes,
   SelectOptionType,
@@ -8,18 +8,24 @@ import {
   timerToOneDirectionTripInMinutes,
   ticketOneDirectionPrice,
   ticketTwoDirectionsPrice,
-} from '../../constants/schedule';
-import { ShipScheduleTime } from '../../containers/ShipScheduleTime';
-import '../../containers/ShipScheduleTime/styles.css';
-import { TicketInfo } from '../../containers/TicketInfo';
+} from "../../constants/schedule";
+import { ShipScheduleTime } from "../../containers/ShipScheduleTime";
+import "../../containers/ShipScheduleTime/styles.css";
+import { TicketInfo } from "../../containers/TicketInfo";
 
+/**
+ * Главная страница приложения
+ */
 export const MainPage: React.FC = () => {
+  //путь выбранный пользователем
   const [selectedRoute, setSelectedRoute] = useState<ShipRoutesType | null>(
     null,
   );
+  //время выбранное пользователем
   const [selectedTime, setSelectedTime] = useState<SelectOptionType | null>(
     null,
   );
+  //время обратной поездки, если пользователь выбрал обратную поездку
   const [
     selectedBackTime,
     setSelectedBackTime,

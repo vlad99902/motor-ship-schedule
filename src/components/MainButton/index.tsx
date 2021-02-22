@@ -1,18 +1,23 @@
-import React, { ButtonHTMLAttributes } from 'react';
-import './styles.css';
+import React, { ButtonHTMLAttributes } from "react";
+import "./styles.css";
 
 interface IMainButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
+/**
+ * Button main component
+ * @param param0
+ */
+
 export const MainButton: React.FC<IMainButton> = ({ children, ...rest }) => {
   const setDisabledStyle = (disabled: boolean | undefined) => {
-    if (disabled) return 'main-button--disabled';
-    return '';
+    if (disabled) return "main-button--disabled";
+    return "";
   };
   return (
     <button
-      className={'main-button ' + setDisabledStyle(rest.disabled)}
+      className={"main-button " + setDisabledStyle(rest.disabled)}
       {...rest}
     >
       {children}

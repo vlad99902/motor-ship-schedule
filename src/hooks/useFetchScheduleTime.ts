@@ -1,6 +1,10 @@
-import { fetchSchedule } from './../api/fetchSchedule';
-import { useState } from 'react';
-import { timeScheduleType } from '../constants/schedule';
+import { fetchSchedule } from "./../api/fetchSchedule";
+import { useState } from "react";
+import { timeScheduleType } from "../constants/schedule";
+
+/**
+ * Функция для загрузки информации расписания
+ */
 
 export const useFetchScheduleTime = (): [
   { schedule: timeScheduleType; loading: boolean; error: string | null },
@@ -17,7 +21,7 @@ export const useFetchScheduleTime = (): [
       const timeSchedule = await response.json();
 
       if (!response.ok) {
-        throw new Error(timeSchedule.message || 'Something wrong in fetch');
+        throw new Error(timeSchedule.message || "Something wrong in fetch");
       }
 
       setSchedule(timeSchedule.schedule);

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { InputField } from '../../components/InputField';
-import { MainButton } from '../../components/MainButton';
-import { ShipRoutesType, TicketInfoFullType } from '../../constants/schedule';
-import { timeStampToHumanReadble, tripDuratin } from '../../utils/dateAndTime';
-import './styles.css';
-import { TripTime } from '../TripTime';
+import React, { useState } from "react";
+import { InputField } from "../../components/InputField";
+import { MainButton } from "../../components/MainButton";
+import { ShipRoutesType, TicketInfoFullType } from "../../constants/schedule";
+import { timeStampToHumanReadble, tripDuratin } from "../../utils/dateAndTime";
+import "./styles.css";
+import { TripTime } from "../TripTime";
 
 type TicketInfoType = {
   time: string | undefined;
@@ -15,6 +15,10 @@ type TicketInfoType = {
   timerToOneDirectionTripInMinutes: number;
 };
 
+/**
+ * Вывод информации о выбранной поездке
+ * @param param0
+ */
 export const TicketInfo: React.FC<TicketInfoType> = ({
   time,
   secondTime,
@@ -23,20 +27,32 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
   ticketTwoDirectionsPrice,
   timerToOneDirectionTripInMinutes,
 }) => {
+  //подсчет выбранного количества билетов
   const [ticketsCount, setTicketsCount] = useState(0);
+  //полная информация о заказе
   const [ticketInfo, setTicketInfo] = useState<TicketInfoFullType>({
     route: null,
     quantity: null,
     price: undefined,
-    endTripTime: '',
+    endTripTime: "",
   });
 
+  //проверка input на валидность
   const [inputValid, setInputValid] = useState(true);
+  //функция на изменении input количества билетов
   const inputChangeHandler = (event: any) => {
     setTicketsCount(event.target.value);
     isInputValid(event.target.value);
   };
 
+  /**
+   * подсчет итоговой цены билета
+   * @param ticketsCount
+   * @param ticketOneDirectionPrice
+   * @param ticketTowDirectionsPrice
+   * @param time
+   * @param secondTime
+   */
   const ticketsPrice = (
     ticketsCount: number,
     ticketOneDirectionPrice: number,
@@ -50,12 +66,23 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
       } else return ticketsCount * ticketTowDirectionsPrice;
   };
 
+  /**
+   * Время окончания поездки
+   * @param startTripTime
+   * @param duration
+   */
   const endTripTime = (startTripTime: string, duration: number): string => {
     return timeStampToHumanReadble(
       new Date(+new Date(startTripTime) + duration * 60 * 1000),
     );
   };
 
+  /**
+   * Функция на нажатие кнопки "посчитать"
+   * @param ticketOneDirectionPrice
+   * @param ticketTwoDirectionsPrice
+   * @param timerToOneDirectionTripInMinutes
+   */
   const submitClickHandler = (
     ticketOneDirectionPrice: number,
     ticketTwoDirectionsPrice: number,
@@ -81,6 +108,13 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
     });
   };
 
+  /**
+   * Функция на проверку валидности данных
+   * @param time
+   * @param secondTime
+   * @param route
+   * @param quantity
+   */
   const submitDisabled = (
     time: string | undefined,
     secondTime: string | undefined,
@@ -98,6 +132,10 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
     return false;
   };
 
+  /**
+   * Проверка на валидность input
+   * @param quantity
+   */
   const isInputValid = (quantity: number) => {
     setInputValid(!(!quantity || quantity <= 0));
   };
@@ -106,7 +144,7 @@ export const TicketInfo: React.FC<TicketInfoType> = ({
     <>
       <section className="select-section">
         <h1 className="select-section__header">
-          Выберите количество билетов:{' '}
+          Выберите количество билетов:{" "}
         </h1>
         <div className="select-section__content">
           <InputField

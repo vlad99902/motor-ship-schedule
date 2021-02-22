@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
-import { SelectOptionType, timeScheduleType } from '../../constants/schedule';
-import { useFetchScheduleTime } from '../../hooks/useFetchScheduleTime';
-import './styles.css';
-import { setTimeToLocalTimeZone } from '../../utils/dateAndTime';
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
+import { SelectOptionType, timeScheduleType } from "../../constants/schedule";
+import { useFetchScheduleTime } from "../../hooks/useFetchScheduleTime";
+import "./styles.css";
+import { setTimeToLocalTimeZone } from "../../utils/dateAndTime";
 
 type ShipScheduleTimeType = {
   routeType: number | undefined;
@@ -15,6 +15,10 @@ type ShipScheduleTimeType = {
   timerToOneDirectionTripInMinutes: number;
 };
 
+/**
+ * Компонент для определения времени путешествия
+ * @param param0
+ */
 export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   routeType,
   routeName,
@@ -24,18 +28,22 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
   setSecondTime,
   timerToOneDirectionTripInMinutes,
 }) => {
+  //получение расписания поездок с сервера
   const [timeSchedule, getNewSchedule] = useFetchScheduleTime();
   const { schedule, loading, error } = timeSchedule;
 
+  //перевод всего расписания в локальный часовой пояс
   const [
     localTimeZoneSchedule,
     setLocalTimeZoneSchedule,
   ] = useState<timeScheduleType>(schedule);
 
+  //отфильтрованный список времени обратного пути, основываясь на выборе времени "туда"
   const [filteredSecondSchedule, setFilteredSecondSchedule] = useState(
     schedule[1],
   );
 
+  //получение данных при загрузке страницы
   useEffect(() => {
     getNewSchedule();
   }, []);
@@ -50,6 +58,10 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
     setFilteredSecondSchedule(localTimeZoneSchedule[1]);
   }, [routeType]);
 
+  /**
+   * Установка времени в локальный формат
+   * @param schedule
+   */
   const setScheduleToLocalTimeZone = (schedule: timeScheduleType) => {
     return schedule.map((oneDirSchedule) =>
       oneDirSchedule.map((time) => {
@@ -62,6 +74,12 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
     );
   };
 
+  /**
+   * Фильтрация списка времени обратной поездки, по выбранному времени "туда"
+   * @param secondSchedule
+   * @param selectedTime
+   * @param tripDuration
+   */
   const filterSecondSchedule = (
     secondSchedule: SelectOptionType[],
     selectedTime: string | undefined,
@@ -83,6 +101,10 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
     });
   };
 
+  /**
+   * Обработчик при измении времени обратной поездки
+   * @param selected
+   */
   const onChageTimeRouteTypeTwo = (selected: SelectOptionType | null) => {
     setTime(selected);
 
@@ -102,9 +124,11 @@ export const ShipScheduleTime: React.FC<ShipScheduleTimeType> = ({
       : setSecondTime(secondSelectedExists);
   };
 
+  //проверка на загрузку
   if (loading) {
     return <h1 className="loading">Loading...</h1>;
   }
+  //проверка на ошибку при загрузке данных
   if (error) {
     return <h1 className="error">{error}...</h1>;
   }
